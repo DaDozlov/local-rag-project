@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local-rag-project"
+version = "0.1.0"
+description = "Privacy-first RAG with DeepSeek‑R1"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ml*", "app*"]
