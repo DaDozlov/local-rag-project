@@ -14,11 +14,17 @@ jobs:
         python-version: ['3.11']
     services:
       ollama:
-        image: ollama/ollama
-        ports: ["11434:11434"]
+        image: ollama/ollama:latest
+        ports:
+          - 11434:11434
+        options: >-
+          --health-cmd "curl -fs http://localhost:11434/api/tags || exit 1"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 30
 
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
