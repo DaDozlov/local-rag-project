@@ -1,0 +1,10 @@
+image:
+  repository: ollama/ollama
+  tag: latest
+  pullPolicy: IfNotPresent
+resources:
+  limits:
+    nvidia.com/gpu: 1
+service:
+  type: ClusterIP
+  port: 11434

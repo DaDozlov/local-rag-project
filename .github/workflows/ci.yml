@@ -1,0 +1,75 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request: {}
+
+jobs:
+  build-test:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version: ['3.11']
+    services:
+      ollama:
+        image: ollama/ollama:latest
+        ports:
+          - 11434:11434
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install black flake8 pytest
+
+      - name: Install Ollama CLI
+        run: |
+          curl -fsSL https://ollama.ai/install.sh | sudo bash
+          ollama --version   # prints e.g. "ollama version 0.6.5"
+
+      - name: Wait until Ollama is ready
+        run: |
+          for i in {1..30}; do
+            if curl -fs http://localhost:11434/api/tags >/dev/null; then
+              echo "Ollama is up"; break
+            fi
+            echo "Waiting for Ollama… ($i/30)"
+            sleep 2
+          done
+
+      - name: Pull models
+        run: |
+          ollama pull deepseek-r1
+          ollama pull nomic-embed-text
+
+      - name: Check formatting with Black
+        run: black --check .
+
+      - name: Run flake8
+        run: flake8 .
+
+      - name: Run pyright
+        run: pyright
+
+      - name: Run tests
+        env:
+          OLLAMA_HOST: http://localhost:11434
+        run: pytest -q
+
+      - name: Build app image
+        run: >
+          docker build -f docker/app.Dockerfile
+          -t rag-app:${{ github.sha }} .

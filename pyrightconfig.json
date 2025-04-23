@@ -1,0 +1,6 @@
+{
+    "include": ["ml", "app"],
+    "exclude": [".venv", "build", "dist"],
+    "reportMissingImports": false,
+    "typeCheckingMode": "basic"
+  }  

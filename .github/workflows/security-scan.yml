@@ -1,0 +1,16 @@
+name: Container Security
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'   # every Monday 02:00 UTC
+  workflow_dispatch:
+
+jobs:
+  trivy:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: aquasecurity/trivy-action@0.14.0
+      with:
+        image-ref: 'docker.io/library/python:3.11-slim'
+        format: 'table'
+        exit-code: '1'
