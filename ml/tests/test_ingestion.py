@@ -1,5 +1,6 @@
 from ml.pipelines.ingestion import load_and_split
 
+
 def test_load_and_split(sample_pdf):
     chunks = load_and_split(sample_pdf)
     assert len(chunks) > 0

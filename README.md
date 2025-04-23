@@ -9,7 +9,6 @@ A **privacy‑first Retrieval‑Augmented‑Generation (RAG)** starter kit that 
 * **MLflow** experiment tracking
 * Optional **Kubeflow Pipelines** Helm chart for heavy‑duty workflows
 
----
 
 ## Repository layout
 
@@ -33,13 +32,12 @@ A **privacy‑first Retrieval‑Augmented‑Generation (RAG)** starter kit that 
 └── README.md
 ```
 
----
 
 ## Quick start (local)
 
 ```bash
 # 1.  Clone
-$ git clone https://github.com/<your-user>/local-rag-project.git
+$ git clone git@github.com:DaDozlov/local-rag-project.git
 $ cd local-rag-project
 
 # 2.  Install Ollama and pull models
@@ -48,16 +46,17 @@ $ ollama pull deepseek-r1:latest
 $ ollama pull mxbai-embed-large
 
 # 3.  Create virtual‑env and install deps
-$ python -m venv .venv && source .venv/bin/activate
+$ python3.11 -m venv .venv && source .venv/bin/activate
 $ pip install -r requirements.txt
 $ pip install -e .
+$ pip install pre-commit
+$ pre-commit install
 
 # 4.  Launch Streamlit UI (spins up Ollama client under the hood)
 $ streamlit run app/ui/main.py
 # visit http://localhost:8501
 ```
 
----
 
 ## Run with Docker
 
@@ -71,20 +70,19 @@ CONTAINER_ID=$(docker run -d -p 8501:8501 rag-app:dev)
 
 A production‑grade setup would use `docker-compose.yml` or K8s manifests with three services: **ollama**, **rag‑app**, and **mlflow**.
 
----
 
 ## Tests & linting
 
 ```bash
 pytest -q
 black --check .
+isort --check-only .
 flake8
 mypy ml app
 ```
 
 All of these run automatically in **GitHub Actions** (see `.github/workflows/ci.yml`).
 
----
 
 ## Experiment tracking
 
@@ -98,7 +96,6 @@ docker run -d -p 5000:5000 -v $(pwd)/mlruns:/mlruns mlflow-server:local
 
 The `rag_model.py` logs latency, precision and answer quality for each run.
 
----
 
 ## Deploy to Kubernetes (optional)
 
@@ -111,7 +108,6 @@ helm install rag-ui rag-infra/kubeflow
 
 Consult `infra/k8s/ollama/values.yaml` to switch between CPU & GPU.
 
----
 
 ## Security
 
@@ -120,7 +116,6 @@ Consult `infra/k8s/ollama/values.yaml` to switch between CPU & GPU.
 * [Trivy](https://aquasecurity.github.io/trivy/) scan runs weekly (`security-scan.yml`).
 * Dependabot keeps Python & action dependencies patched.
 
----
 
 ## Configuration
 
@@ -134,5 +129,4 @@ PROMPT_TEMPLATE="Answer the question using the context below"
 
 All environment variables are read in `ml/models/rag_model.py`.
 
----
 

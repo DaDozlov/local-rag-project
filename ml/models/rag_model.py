@@ -10,6 +10,8 @@ _prompt = ChatPromptTemplate.from_template(
     Question: {question}\nContext: {docs}"""
 )
 
-rag_chain = RunnableParallel(
-    {"question": RunnablePassthrough(), "docs": _retriever}
-) | _prompt | _llm
+rag_chain = (
+    RunnableParallel({"question": RunnablePassthrough(), "docs": _retriever})
+    | _prompt
+    | _llm
+)

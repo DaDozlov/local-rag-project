@@ -31,10 +31,17 @@ jobs:
         pip install -r requirements.txt
 
     # —— Static checks ——
-    - run: black --check .
-    - run: isort --check-only .
-    - run: flake8 .
-    - run: mypy ml app
+    - name: Check formatting with Black
+      run: black --check .
+
+    - name: Check import sorting with isort
+      run: isort --check-only .
+
+    - name: Run flake8
+      run: flake8 .
+
+    - name: Run mypy
+      run: mypy ml app
 
     # —— Tests ——
     - run: pytest -q

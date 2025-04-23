@@ -10,6 +10,7 @@ else:
 
     _EMB = OllamaEmbeddings(model="nomic-embed-text")  # only 3.8 GiB
 
+
 def build_retriever(persist_dir: str = "./chromadb"):
     db = Chroma(persist_directory=persist_dir, embedding_function=_EMB)
     return db.as_retriever(search_kwargs={"k": 6})

@@ -4,8 +4,10 @@ from ml.models.rag_model import rag_chain
 
 app = FastAPI(title="DeepSeek‑R1 RAG API")
 
+
 class Query(BaseModel):
     question: str
+
 
 @app.post("/query")
 async def query(payload: Query):

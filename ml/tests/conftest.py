@@ -7,10 +7,12 @@ from fpdf import FPDF
 # tell retriever to use FakeEmbeddings
 os.environ["USE_FAKE_EMBEDDINGS"] = "1"
 
+
 @pytest.fixture(scope="session")
 def ollama():
     """Backward‑compat dummy; real Ollama is skipped in tests."""
     yield  # nothing to do
+
 
 @pytest.fixture(scope="session")
 def sample_pdf(tmp_path_factory) -> pathlib.Path:
