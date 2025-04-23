@@ -1,4 +1,5 @@
 import os
+
 from langchain_community.vectorstores import Chroma
 
 if os.getenv("USE_FAKE_EMBEDDINGS") == "1":

@@ -1,7 +1,9 @@
-from ml.pipelines.retriever import build_retriever
-from langchain_core.documents import Document
-from langchain_community.vectorstores import Chroma
 import os
+
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
+
+from ml.pipelines.retriever import build_retriever
 
 
 def test_precision_at_k(tmp_path):

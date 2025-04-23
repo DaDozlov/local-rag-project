@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+
 from ml.models.rag_model import rag_chain
 
 app = FastAPI(title="DeepSeek‑R1 RAG API")

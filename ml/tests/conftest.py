@@ -1,7 +1,8 @@
 import os
-import pytest
-import textwrap
 import pathlib
+import textwrap
+
+import pytest
 from fpdf import FPDF
 
 # tell retriever to use FakeEmbeddings

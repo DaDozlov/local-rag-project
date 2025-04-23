@@ -1,6 +1,8 @@
-from langchain_community.embeddings import OllamaEmbeddings
-from chromadb import PersistentClient
 import uuid
+
+from langchain_community.embeddings import OllamaEmbeddings
+
+from chromadb import PersistentClient
 
 EMBED_MODEL = "mxbai-embed-large"
 DB_DIR = "./chromadb"

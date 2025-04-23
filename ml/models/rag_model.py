@@ -1,6 +1,7 @@
-from langchain_community.chat_models import ChatOllama
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.runnable import RunnableParallel, RunnablePassthrough
+from langchain_community.chat_models import ChatOllama
+
 from ml.pipelines.retriever import build_retriever
 
 _llm = ChatOllama(model="deepseek-r1")
