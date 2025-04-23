@@ -8,7 +8,7 @@ RUN pip install --user -r requirements.txt
 
 # -------- runtime stage --------
 FROM python:3.11-slim AS runtime
-LABEL org.opencontainers.image.source="https://github.com/<your-username>/rag-deepseek"
+LABEL org.opencontainers.image.source="https://github.com/DaDozlov/local-rag-project.git"
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 RUN adduser --disabled-password --uid 1000 appuser && mkdir -p /app
 WORKDIR /app
