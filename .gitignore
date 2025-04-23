@@ -175,4 +175,4 @@ cython_debug/
 
 .pytest_cache
 
-chromadb/chroma.sqlite3
+chromadb/
