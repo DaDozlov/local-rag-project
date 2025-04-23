@@ -10,7 +10,9 @@ def test_precision_at_k(tmp_path):
     # Documents to seed the vector store
     test_docs = [
         Document(page_content="This repository structure is important."),
-        Document(page_content="Repository layout includes app/, ml/, and infra/."),
+        Document(
+            page_content="Repository layout includes app/, ml/, and infra/."
+        ),
         Document(page_content="Completely unrelated content."),
     ]
 
@@ -26,7 +28,9 @@ def test_precision_at_k(tmp_path):
 
     # Create and persist the vector store
     Chroma.from_documents(
-        documents=test_docs, embedding=embedding, persist_directory=str(tmp_path)
+        documents=test_docs,
+        embedding=embedding,
+        persist_directory=str(tmp_path),
     )
 
     # Build retriever on the seeded DB
