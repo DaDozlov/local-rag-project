@@ -1,9 +1,10 @@
+---
 name: CI
 
 on:
   push:
     branches: [main, develop]
-  pull_request:
+  pull_request: {}
 
 jobs:
   build-test:
@@ -17,35 +18,35 @@ jobs:
         ports: ["11434:11434"]
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    # —— Dependency caching ——
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-        cache: 'pip'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install black isort flake8 mypy pytest
 
-    # —— Static checks ——
-    - name: Check formatting with Black
-      run: black --check .
+      - name: Check formatting with Black
+        run: black --check .
 
-    - name: Check import sorting with isort
-      run: isort --check-only .
+      - name: Check import sorting with isort
+        run: isort --check-only .
 
-    - name: Run flake8
-      run: flake8 .
+      - name: Run flake8
+        run: flake8 .
 
-    - name: Run mypy
-      run: mypy ml app
+      - name: Run mypy
+        run: mypy ml app
 
-    # —— Tests ——
-    - run: pytest -q
+      - name: Run tests
+        run: pytest -q
 
-    # —— Build Docker image to guarantee it still works ——
-    - name: Build app image
-      run: docker build -f docker/app.Dockerfile -t rag-app:${{github.sha}} .
+      - name: Build app image
+        run: >
+          docker build -f docker/app.Dockerfile
+          -t rag-app:${{ github.sha }} .
