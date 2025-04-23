@@ -11,6 +11,3 @@ requires-python = ">=3.11"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["ml*", "app*"]
-
-[tool.isort]
-profile = "black"
