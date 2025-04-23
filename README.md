@@ -76,7 +76,6 @@ A production‑grade setup would use `docker-compose.yml` or K8s manifests with 
 ```bash
 pytest -q
 black --check .
-isort --check-only .
 flake8
 mypy ml app
 ```

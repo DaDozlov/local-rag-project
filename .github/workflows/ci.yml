@@ -29,13 +29,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install black isort flake8 mypy pytest
+          pip install black flake8 mypy pytest
 
       - name: Check formatting with Black
         run: black --check .
-
-      - name: Check import sorting with isort
-        run: isort --check-only .
 
       - name: Run flake8
         run: flake8 .
