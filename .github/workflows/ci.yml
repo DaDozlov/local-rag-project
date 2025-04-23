@@ -17,11 +17,6 @@ jobs:
         image: ollama/ollama:latest
         ports:
           - 11434:11434
-        options: >-
-          --health-cmd "curl -fs http://localhost:11434/api/tags || exit 1"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 30
 
     steps:
       - uses: actions/checkout@v4
@@ -40,6 +35,26 @@ jobs:
           pip install -r requirements.txt
           pip install black flake8 pytest
 
+      - name: Install Ollama CLI
+        run: |
+          curl -fsSL https://ollama.ai/install.sh | sudo bash
+          ollama --version   # prints e.g. "ollama version 0.6.5"
+
+      - name: Wait until Ollama is ready
+        run: |
+          for i in {1..30}; do
+            if curl -fs http://localhost:11434/api/tags >/dev/null; then
+              echo "Ollama is up"; break
+            fi
+            echo "Waiting for Ollama… ($i/30)"
+            sleep 2
+          done
+
+      - name: Pull models
+        run: |
+          ollama pull deepseek-r1
+          ollama pull nomic-embed-text
+
       - name: Check formatting with Black
         run: black --check .
 
@@ -50,6 +65,8 @@ jobs:
         run: pyright
 
       - name: Run tests
+        env:
+          OLLAMA_HOST: http://localhost:11434
         run: pytest -q
 
       - name: Build app image

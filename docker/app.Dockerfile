@@ -6,7 +6,7 @@ WORKDIR /build
 COPY requirements.txt ./
 RUN pip install --user -r requirements.txt
 
-# -------- runtime stage --------
+# runtime stage
 FROM python:3.11-slim AS runtime
 LABEL org.opencontainers.image.source="https://github.com/DaDozlov/local-rag-project.git"
 ENV PATH="/home/appuser/.local/bin:${PATH}"
