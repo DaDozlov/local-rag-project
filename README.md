@@ -111,7 +111,7 @@ Consult `infra/k8s/ollama/values.yaml` to switch between CPU & GPU.
 
 ## Security
 
-* **Non‑root containers** & minimal `python:3.13-slim` base images.
+* **Non‑root containers** & minimal `python:3.11-slim` base images.
 * `.gitignore` hides `.env`, vector DB, MLflow artefacts, model files.
 * [Trivy](https://aquasecurity.github.io/trivy/) scan runs weekly (`security-scan.yml`).
 * Dependabot keeps Python & action dependencies patched.

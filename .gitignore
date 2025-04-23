@@ -174,3 +174,5 @@ cython_debug/
 .pypirc
 
 .pytest_cache
+
+chromadb/chroma.sqlite3

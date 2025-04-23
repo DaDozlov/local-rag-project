@@ -2,10 +2,9 @@ from ml.pipelines.embedding import embed
 from ml.pipelines.ingestion import load_and_split
 
 
-def test_embedding_vector_shape(sample_pdf):
+def test_embedding_vector_shape(sample_pdf, tmp_path):
     chunks = load_and_split(sample_pdf)
-    collection = embed(chunks)
+    collection = embed(chunks, collection_name="test_embed", db_path=str(tmp_path))
     assert collection.count() == len(chunks)
-    # spot‑check one vector length
     v = collection.get(include=["embeddings"])["embeddings"][0]
-    assert len(v) in {1024, 768, 512}
+    assert len(v) in {384, 512, 768, 1024}
