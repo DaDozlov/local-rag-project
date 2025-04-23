@@ -23,6 +23,6 @@ def sample_pdf(tmp_path_factory) -> pathlib.Path:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
-        pdf.multi_cell(0, 10, txt=textwrap.fill("Local RAG test PDF.", 40))
+        pdf.multi_cell(0, 10, text=textwrap.fill("Local RAG test PDF.", 40))
         pdf.output(str(pdf_file))
     return pdf_file

@@ -77,7 +77,7 @@ A production‑grade setup would use `docker-compose.yml` or K8s manifests with 
 pytest -q
 black --check .
 flake8
-mypy ml app
+pyright
 ```
 
 All of these run automatically in **GitHub Actions** (see `.github/workflows/ci.yml`).
